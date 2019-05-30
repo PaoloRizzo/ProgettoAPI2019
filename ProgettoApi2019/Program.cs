@@ -211,10 +211,16 @@ namespace ProgettoApi2019
         private static string Report()
         {
             string output = "";
+
+            List<string> r = new List<string>();
             foreach (var x in relazioni.Keys)
             {
+                r.Add(x);
+            }
+            r.Sort();
 
-
+            foreach (var x in r)
+            {
                 List<string> champions = new List<string>();
                 int max = -1;
 
