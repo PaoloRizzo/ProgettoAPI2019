@@ -27,7 +27,12 @@ namespace ProgettoApi2019
             }
 
             Solve("input.txt");
-            Console.Write(Report());
+            ConsoleStampaConInterazianeUtente(Report());
+        }
+
+        private static void ConsoleStampaConInterazianeUtente(string v)
+        {
+            Console.Write(v);
             Console.ReadKey();
         }
 
@@ -42,8 +47,7 @@ namespace ProgettoApi2019
             }
             catch
             {
-                Console.WriteLine("Input file not found");
-                Console.ReadKey();
+                ConsoleStampaConInterazianeUtente("Input file not found");
                 return;
             }
 
@@ -81,8 +85,7 @@ namespace ProgettoApi2019
 
             if (args.Length < 3)
             {
-                Console.WriteLine("Need more arguments");
-                Console.ReadKey();
+                ConsoleStampaConInterazianeUtente("Need more arguments");
                 return;
             }
 
@@ -96,8 +99,7 @@ namespace ProgettoApi2019
                 GeneraTest(avg_lines);
             }
 
-            Console.WriteLine(n_test + " generated.");
-            Console.ReadKey();
+            ConsoleStampaConInterazianeUtente(n_test + " generated.");
             return;
 
         }
