@@ -15,7 +15,7 @@ namespace ProgettoApi2019
 
         static void Main(string[] args)
         {
-            //args = new string[] { "-g", "100", "150000"};
+            args = new string[] { "-g", "100", "150000"};
 
             if (args.Length>0)
             {
@@ -26,17 +26,30 @@ namespace ProgettoApi2019
                 }
             }
 
-            Solve("input.txt");
-            ConsoleStampaConInterazianeUtente(Report());
+            var r = Solve("input.txt");
+            if (r != null)
+            {
+                foreach(var r2 in r)
+                {
+                    Console.WriteLine(r2);
+                }
+
+                ConsoleStampaConInterazioneUtente("");
+            }
         }
 
-        private static void ConsoleStampaConInterazianeUtente(string v)
+        private static void ConsoleStampaConInterazioneUtente(string v)
         {
             Console.Write(v);
-            Console.ReadKey();
+            try{
+                Console.ReadKey();
+            }
+            catch{
+                ;
+            }
         }
 
-        private static void Solve(string v)
+        private static List<string> Solve(string v)
         {
 
             relazioni = new Dictionary<string, Dictionary<string, List<string>>>();
@@ -47,9 +60,11 @@ namespace ProgettoApi2019
             }
             catch
             {
-                ConsoleStampaConInterazianeUtente("Input file not found");
-                return;
+                ConsoleStampaConInterazioneUtente("Input file not found");
+                return null;
             }
+
+            List<string> list = new List<string>();
 
             foreach (string s2 in s)
             {
@@ -69,12 +84,21 @@ namespace ProgettoApi2019
                 {
                     DelRel(s2);
                 }
+                else if (s2.StartsWith("report"))
+                {
+                    list.Add(Report());
+                }
+                else if (s2.StartsWith("end"))
+                {
+                    break;
+                }
                 else
                 {
                     Console.WriteLine("UNEXPECTED INPUT: " + s2);
                 }
             }
 
+            return list;
         }
 
         private static void Generatore(string[] args)
@@ -85,7 +109,7 @@ namespace ProgettoApi2019
 
             if (args.Length < 3)
             {
-                ConsoleStampaConInterazianeUtente("Need more arguments");
+                ConsoleStampaConInterazioneUtente("Need more arguments");
                 return;
             }
 
@@ -99,7 +123,7 @@ namespace ProgettoApi2019
                 GeneraTest(avg_lines);
             }
 
-            ConsoleStampaConInterazianeUtente(n_test + " generated.");
+            ConsoleStampaConInterazioneUtente(n_test + " generated.");
             return;
 
         }
@@ -137,14 +161,13 @@ namespace ProgettoApi2019
 
             string output_path = GetOutputPath();
             File.WriteAllLines("i/" + output_path, L);
-            Solve("i/" + output_path);
-            Save("o/" + output_path);
+            var r = Solve("i/" + output_path);
+            Save("o/" + output_path, r);
         }
 
-        private static void Save(string v)
+        private static void Save(string v, List<string> r)
         {
-            string output_content = Report();
-            File.WriteAllText(v, output_content);
+            File.WriteAllLines(v, r);
         }
 
         private static string GetOutputPath()
@@ -154,7 +177,10 @@ namespace ProgettoApi2019
 
         private static string GetDataOra()
         {
-            return DateTime.Now.Year + "_" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Minute.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Second.ToString().PadLeft(2, '0') + DateTime.Now.Millisecond.ToString().PadLeft(3, '0');
+            return DateTime.Now.Year + "_" + DateTime.Now.Month.ToString().PadLeft(2, '0') + "_" +
+            DateTime.Now.Day.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Hour.ToString().PadLeft(2, '0') + "_" +
+            DateTime.Now.Minute.ToString().PadLeft(2, '0') + "_" + DateTime.Now.Second.ToString().PadLeft(2, '0') + "_" +
+            DateTime.Now.Millisecond.ToString().PadLeft(3, '0');
         }
 
         private static string GeneraLinea()
@@ -166,8 +192,10 @@ namespace ProgettoApi2019
                 return GeneraDelEnt();
             else if (choice > 50 && choice <= 85)
                 return GeneraAddRel();
-            else if (choice > 85 && choice <= 100)
+            else if (choice > 85 && choice <= 95)
                 return GeneraDelRel();
+            else if (choice > 95 && choice <= 100)
+                return "report";
             else
                 throw new Exception();
         }
@@ -253,6 +281,9 @@ namespace ProgettoApi2019
                     output += (" " + max + ";" + '\n');
                 }
             }
+
+            if (String.IsNullOrEmpty(output))
+                return "none";
 
             return output;
         }
