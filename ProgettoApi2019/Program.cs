@@ -15,7 +15,7 @@ namespace ProgettoApi2019
 
         static void Main(string[] args)
         {
-            args = new string[] { "-g", "100", "150000"};
+            //args = new string[] { "-g", "100", "150000"};
 
             if (args.Length>0)
             {
