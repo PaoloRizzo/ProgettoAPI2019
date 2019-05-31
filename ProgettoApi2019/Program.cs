@@ -10,12 +10,13 @@ namespace ProgettoApi2019
 
                                 //amico_di          //b       //lista di a
         public static Dictionary<string, Dictionary<string, List<string> >> relazioni;
+        public static List<string> entita;
 
         public static Random rnd;
 
         static void Main(string[] args)
         {
-            //args = new string[] { "-g", "100", "150000"};
+            args = new string[] { "-g", "100", "150000"};
 
             if (args.Length>0)
             {
@@ -51,7 +52,7 @@ namespace ProgettoApi2019
 
         private static List<string> Solve(string v)
         {
-
+            entita = new List<string>();
             relazioni = new Dictionary<string, Dictionary<string, List<string>>>();
             string[] s = null;
             try
@@ -327,16 +328,26 @@ namespace ProgettoApi2019
                     relazioni[x][x2].Remove(s[1]);
                 }
             }
+
+            entita.Remove(s[1]);
         }
 
         private static void AddEnt(string s2)
         {
-            //done
+            string[] s = s2.Split(' ');
+            if (!entita.Contains(s[1]))
+                entita.Add(s[1]);
         }
 
         private static void AddRel(string s2)
         {
             string[] s = s2.Split(' ');
+
+            if (!(entita.Contains(s[1]) && entita.Contains(s[2])))
+            {
+                return;
+            }
+
             if (!relazioni.ContainsKey(s[3]))
             {
                 relazioni.Add(s[3], new Dictionary<string, List<string>>());
