@@ -189,11 +189,11 @@ namespace ProgettoApi2019
         private static string GeneraLinea()
         {
             int choice = rnd.Next(0, 100);
-            if (choice >= 0 && choice <= 25)
+            if (choice >= 0 && choice <= 20)
                 return GeneraAddEnt();
-            else if (choice > 25 && choice <= 50)
+            else if (choice > 20 && choice <= 60)
                 return GeneraDelEnt();
-            else if (choice > 50 && choice <= 85)
+            else if (choice > 60 && choice <= 85)
                 return GeneraAddRel();
             else if (choice > 85 && choice <= 95)
                 return GeneraDelRel();
@@ -205,7 +205,7 @@ namespace ProgettoApi2019
 
         private static string GeneraDelRel()
         {
-            char carattere1 = RandomLettera();
+            char carattere1 = RandomLetteraRelazione();
             char carattere2 = RandomLettera();
             char carattere3 = RandomLettera();
             return "delrel \"" + carattere1 + "\" \"" + carattere2 + "\" \"" + carattere3 + "\"";
@@ -213,7 +213,7 @@ namespace ProgettoApi2019
 
         private static string GeneraAddRel()
         {
-            char carattere1 = RandomLettera();
+            char carattere1 = RandomLetteraRelazione();
             char carattere2 = RandomLettera();
             char carattere3 = RandomLettera();
             return "addrel \"" + carattere1 + "\" \"" + carattere2 + "\" \"" + carattere3 + "\"";
@@ -222,6 +222,14 @@ namespace ProgettoApi2019
         private static char RandomLettera()
         {
             int lettera = rnd.Next(0, 26);
+            lettera += 'a';
+            char carattere = (char)lettera;
+            return carattere;
+        }
+        
+        private static char RandomLetteraRelazione()
+        {
+            int lettera = rnd.Next(0, 5);
             lettera += 'a';
             char carattere = (char)lettera;
             return carattere;
