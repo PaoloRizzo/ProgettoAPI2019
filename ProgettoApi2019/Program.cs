@@ -16,7 +16,8 @@ namespace ProgettoApi2019
 
         static void Main(string[] args)
         {
-            args = new string[] { "-g", "100", "150000"};
+            //De-commentare questa linea per forzare la generazione di test
+            //args = new string[] { "-g", "1", "500000"};
 
             if (args.Length>0)
             {

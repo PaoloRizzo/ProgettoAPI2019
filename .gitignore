@@ -6,3 +6,9 @@ ProgettoApi2019/obj/
 ProgettoApi2019/bin/
 
 \.vs/ProgettoApi2019/v15/\.suo
+
+*.7z
+
+ProgettoApi2019/i/
+
+ProgettoApi2019/o/
