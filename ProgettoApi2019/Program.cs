@@ -279,7 +279,7 @@ namespace ProgettoApi2019
                         output += (" " + x2);
                     }
 
-                    output += (" " + max + ";" + '\n');
+                    output += (" " + max + "; ");
                 }
             }
 
