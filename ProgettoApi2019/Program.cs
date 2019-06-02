@@ -160,6 +160,7 @@ namespace ProgettoApi2019
             {
                 L.Add(GeneraLinea());
             }
+            L.Add("end");
 
             string output_path = GetOutputPath();
             File.WriteAllLines("i/" + output_path, L);
